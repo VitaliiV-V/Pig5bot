@@ -15,6 +15,7 @@ owner_id = os.getenv("owner_id")
 main_channel_id = os.getenv("main_channel_id")
 personal_channel_id = os.getenv("personal_channel_id")
 logs_channel_id = os.getenv("logs_channel_id")
+full_channel_id = os.getenv("full_channel_id")
 enable_Text_Notifications = os.getenv("enable_Text_Notifications")
 
 owner_name = os.getenv("owner_name")
@@ -76,6 +77,11 @@ async def reply_in_channel(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
 
     if chat_id == main_channel_id:
+        await context.bot.forward_message(
+            chat_id=full_channel_id,
+            from_chat_id=chat_id,
+            message_id=msg.message_id
+        )
         await context.bot.forward_message(
             chat_id = logs_channel_id,
             from_chat_id = chat_id,
