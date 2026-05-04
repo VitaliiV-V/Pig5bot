@@ -3,17 +3,21 @@ import os
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters
 from telegram.ext import ContextTypes, ChatMemberHandler
+from dotenv import load_dotenv
 import uuid
 
-TOKEN = ""
+load_dotenv()
 
-owner_id = 0
-main_channel_id = 0
-personal_channel_id = 0
-logs_channel_id = 0
-enable_Text_Notifications = True
+TOKEN = os.getenv("TOKEN")
 
-owner_name = ""
+
+owner_id = os.getenv("owner_id")
+main_channel_id = os.getenv("main_channel_id")
+personal_channel_id = os.getenv("personal_channel_id")
+logs_channel_id = os.getenv("logs_channel_id")
+enable_Text_Notifications = os.getenv("enable_Text_Notifications")
+
+owner_name = os.getenv("owner_name")
 
 def load_chat_config(name):
     file_path = f"configs/{name}.json"
