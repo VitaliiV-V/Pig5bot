@@ -102,7 +102,7 @@ async def reply_in_channel(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await context.bot.delete_message(chat_id=chat_id, message_id=message_id)
         return
 
-    if update.channel_post and msg.reply_to_message and data2["uuid"] in msg.author_signature:
+    if "/ban" in message_text and update.channel_post and msg.reply_to_message and data2["uuid"] in msg.author_signature:
         name = str(main_channel_id)
         file_path = f"configs/{name}.json"
         data = load_chat_config(str(main_channel_id))
