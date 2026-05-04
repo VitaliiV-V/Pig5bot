@@ -11,12 +11,12 @@ load_dotenv()
 TOKEN = os.getenv("TOKEN")
 
 
-owner_id = os.getenv("owner_id")
-main_channel_id = os.getenv("main_channel_id")
-personal_channel_id = os.getenv("personal_channel_id")
-logs_channel_id = os.getenv("logs_channel_id")
-full_channel_id = os.getenv("full_channel_id")
-enable_Text_Notifications = os.getenv("enable_Text_Notifications")
+owner_id = int(os.getenv("owner_id"))
+main_channel_id = int(os.getenv("main_channel_id"))
+personal_channel_id = int(os.getenv("personal_channel_id"))
+logs_channel_id = int(os.getenv("logs_channel_id"))
+full_channel_id = int(os.getenv("full_channel_id"))
+enable_Text_Notifications = bool(os.getenv("enable_Text_Notifications"))
 
 owner_name = os.getenv("owner_name")
 
