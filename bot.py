@@ -492,7 +492,7 @@ async def register(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     s = msg.text.split(maxsplit=1)[1] if len(msg.text.split(maxsplit=1)) > 1 else ""
     text = (f"Новый запрос на регистрацию канала:\n"
-            f"Владелец: {msg.from_user.first_name} {msg.from_user.username}\n"
+            f"Владелец: {msg.from_user.first_name} @{msg.from_user.username}\n"
             f"Имя канала: {s}")
     keyboard = ReplyKeyboardMarkup(
         [[f"/add {s}", "/reject"]],
