@@ -503,6 +503,9 @@ async def register(update: Update, context: ContextTypes.DEFAULT_TYPE):
         text = text,
         reply_markup=keyboard
     )
+    await msg.reply_text(
+        f"Запрос на регистрацию отправлен", reply_markup=ReplyKeyboardRemove()
+    )
 
 async def reject(update: Update, context: ContextTypes.DEFAULT_TYPE):
     msg = update.message
