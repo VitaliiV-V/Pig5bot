@@ -1,0 +1,28 @@
+{
+    "ban_messages": 0,
+    "banned": [],
+    "banned_users": [],
+    "owner_names": [
+        "Vitali",
+        "Ⅴitali",
+        "Vitali",
+        "Vitаli",
+        "VitaIi",
+        "ⅤitaIi",
+        "VitaIi",
+        "VitаIi",
+        "Vitаli",
+        "Ⅴitаli",
+        "Vitаli",
+        "Vitаli",
+        "VitаIi",
+        "ⅤitаIi",
+        "VitаIi",
+        "VitаIi"
+    ],
+    "white_lists_mode": "admins",
+    "white_list": [
+        "Воппер"
+    ],
+    "anon_enable": 0
+}
