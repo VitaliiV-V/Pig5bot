@@ -11,6 +11,8 @@ load_dotenv()
 TOKEN = os.getenv("TOKEN")
 
 
+
+
 owner_id = int(os.getenv("owner_id"))
 main_channel_id = int(os.getenv("main_channel_id"))
 personal_channel_id = int(os.getenv("personal_channel_id"))
