@@ -57,9 +57,9 @@ def check(text, id):
 
     name = "configs/" + str(id) + ".json"
     with open(name, "r", encoding="utf-8") as f:
-        data2 = json.load(f)
+        owner_uuid = json.load(f)
 
-    for i in data2["banned"]:
+    for i in owner_uuid["banned"]:
         if i in text2 or i in text:
             return True
 
@@ -94,16 +94,28 @@ async def reply_in_channel(update: Update, context: ContextTypes.DEFAULT_TYPE):
             parse_mode = "HTML"
         )
 
+    with open("uuid.json", "r", encoding="utf-8") as f:
+        owner_uuid = json.load(f)
+
+    if owner_uuid["uuid"] in msg.author_signature:
+        return
+
     config = load_chat_config(str(main_channel_id))
 
-    with open("uuid.json", "r", encoding="utf-8") as f:
-        data2 = json.load(f)
 
     if msg.author_signature in config["banned_users"]:
         await context.bot.delete_message(chat_id=chat_id, message_id=message_id)
         return
 
-    if "/ban" in message_text and update.channel_post and msg.reply_to_message and data2["uuid"] in msg.author_signature:
+    if config["ban_messages"] == 1:
+        await context.bot.delete_message(chat_id=chat_id, message_id=message_id)
+        return
+    elif config["ban_messages"] == 2:
+        if check(message_text, chat_id):
+            await context.bot.delete_message(chat_id=chat_id, message_id=message_id)
+            return
+
+    if "/ban" in message_text and update.channel_post and msg.reply_to_message and owner_uuid["uuid"] in msg.author_signature:
         name = str(main_channel_id)
         file_path = f"configs/{name}.json"
         data = load_chat_config(str(main_channel_id))
@@ -124,7 +136,7 @@ async def reply_in_channel(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     ok = 1
 
         if ok:
-            if data2["uuid"] not in msg.author_signature:
+            if owner_uuid["uuid"] not in msg.author_signature:
                 await context.bot.delete_message(chat_id=chat_id, message_id=message_id)
                 return
             else:
@@ -167,13 +179,6 @@ async def reply_in_channel(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await context.bot.delete_message(chat_id=chat_id, message_id=message_id)
             return
 
-    if config["ban_messages"] == 1:
-        await context.bot.delete_message(chat_id=chat_id, message_id=message_id)
-        return
-    elif config["ban_messages"] == 2:
-        if check(message_text, chat_id):
-            await context.bot.delete_message(chat_id=chat_id, message_id=message_id)
-            return
 
 async def ban_new_members(update: Update, context: ContextTypes.DEFAULT_TYPE):
     result = update.chat_member
