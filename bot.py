@@ -77,22 +77,22 @@ async def reply_in_channel(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if chat_id != main_channel_id:
         return
 
-    if chat_id == main_channel_id:
-        await context.bot.forward_message(
-            chat_id=full_channel_id,
-            from_chat_id=chat_id,
-            message_id=msg.message_id
-        )
-        await context.bot.forward_message(
-            chat_id = logs_channel_id,
-            from_chat_id = chat_id,
-            message_id = msg.message_id
-        )
-        await context.bot.send_message(
-            chat_id = logs_channel_id,
-            text = f"<pre>{msg.author_signature}</pre>",
-            parse_mode = "HTML"
-        )
+    # if chat_id == main_channel_id:
+    #     await context.bot.forward_message(
+    #         chat_id=full_channel_id,
+    #         from_chat_id=chat_id,
+    #         message_id=msg.message_id
+    #     )
+    #     await context.bot.forward_message(
+    #         chat_id = logs_channel_id,
+    #         from_chat_id = chat_id,
+    #         message_id = msg.message_id
+    #     )
+    #     await context.bot.send_message(
+    #         chat_id = logs_channel_id,
+    #         text = f"<pre>{msg.author_signature}</pre>",
+    #         parse_mode = "HTML"
+    #     )
 
     with open("uuid.json", "r", encoding="utf-8") as f:
         owner_uuid = json.load(f)
