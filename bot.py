@@ -127,6 +127,11 @@ async def reply_in_channel(update: Update, context: ContextTypes.DEFAULT_TYPE):
         with open(file_path, "w", encoding="utf-8") as f:
             json.dump(data, f, ensure_ascii=False, indent=4)
 
+    if not msg.author_signature:
+        if not config["anon_enable"]:
+            await context.bot.delete_message(chat_id=chat_id, message_id=message_id)
+            return
+        
     if msg.author_signature:
         txt = msg.author_signature
         ok = 0
