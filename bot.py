@@ -130,7 +130,7 @@ async def reply_in_channel(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not msg.author_signature:
         if config["anon_enable"] == 0:
             await context.bot.delete_message(chat_id=chat_id, message_id=message_id)
-            return
+        return
 
     if msg.author_signature:
         txt = msg.author_signature
