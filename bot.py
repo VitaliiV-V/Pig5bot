@@ -97,7 +97,7 @@ async def reply_in_channel(update: Update, context: ContextTypes.DEFAULT_TYPE):
     with open("uuid.json", "r", encoding="utf-8") as f:
         owner_uuid = json.load(f)
 
-    if owner_uuid["uuid"] in msg.author_signature:
+    if msg.author_signature and owner_uuid["uuid"] in msg.author_signature:
         return
 
     config = load_chat_config(str(main_channel_id))
@@ -127,7 +127,7 @@ async def reply_in_channel(update: Update, context: ContextTypes.DEFAULT_TYPE):
         with open(file_path, "w", encoding="utf-8") as f:
             json.dump(data, f, ensure_ascii=False, indent=4)
 
-    if msg.author_signature == None:
+    if not msg.author_signature:
         if not config["anon_enable"]:
             await context.bot.delete_message(chat_id=chat_id, message_id=message_id)
             return
