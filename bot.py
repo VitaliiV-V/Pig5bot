@@ -96,12 +96,36 @@ async def reply_in_channel(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     with open("uuid.json", "r", encoding="utf-8") as f:
         owner_uuid = json.load(f)
-
-    if msg.author_signature and owner_uuid["uuid"] in msg.author_signature:
-        return
-
+    
+    
     config = load_chat_config(str(main_channel_id))
 
+
+    if msg.author_signature:
+        txt = msg.author_signature
+        ok = 0
+        if config["owner_names"]:
+            for i in config["owner_names"]:
+                if i in txt:
+                    ok = 1
+
+        if ok:
+            if owner_uuid["uuid"] not in msg.author_signature:
+                await context.bot.delete_message(chat_id=chat_id, message_id=message_id)
+                return
+            else:
+                new_uuid = str(uuid.uuid4())
+
+                await context.bot.set_chat_title(personal_channel_id, owner_name + "ㅤㅤㅤㅤㅤㅤ ㅤ ㅤ ㅤ ㅤ ㅤ ㅤ ㅤ " + new_uuid)
+
+                with open("uuid.json", "r", encoding="utf-8") as f:
+                    data3 = json.load(f)
+
+                data3["uuid"] = new_uuid
+
+                with open("uuid.json", "w", encoding="utf-8") as f:
+                    json.dump(data3, f, ensure_ascii=False, indent=4)
+                return            
 
     if msg.author_signature in config["banned_users"]:
         await context.bot.delete_message(chat_id=chat_id, message_id=message_id)
@@ -132,31 +156,7 @@ async def reply_in_channel(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await context.bot.delete_message(chat_id=chat_id, message_id=message_id)
         return
 
-    if msg.author_signature:
-        txt = msg.author_signature
-        ok = 0
-        if config["owner_names"]:
-            for i in config["owner_names"]:
-                if i in txt:
-                    ok = 1
-
-        if ok:
-            if owner_uuid["uuid"] not in msg.author_signature:
-                await context.bot.delete_message(chat_id=chat_id, message_id=message_id)
-                return
-            else:
-                new_uuid = str(uuid.uuid4())
-
-                await context.bot.set_chat_title(personal_channel_id, owner_name + "ㅤㅤㅤㅤㅤㅤ ㅤ ㅤ ㅤ ㅤ ㅤ ㅤ ㅤ " + new_uuid)
-
-                with open("uuid.json", "r", encoding="utf-8") as f:
-                    data3 = json.load(f)
-
-                data3["uuid"] = new_uuid
-
-                with open("uuid.json", "w", encoding="utf-8") as f:
-                    json.dump(data3, f, ensure_ascii=False, indent=4)
-                return
+    
 
     if config["white_lists_mode"] != "off":
         ok = False
